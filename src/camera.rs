@@ -10,7 +10,7 @@ pub struct Camera {
 impl Camera {
     pub fn new() -> Self {
         Camera {
-            lower_left_corner: Vec3::new(-1.5, -1.0, -1.0),
+            lower_left_corner: Vec3::new(-2.0, -1.0, -1.0),
             horizontal: Vec3::new(4.0, 0.0, 0.0),
             vertical: Vec3::new(0.0, 2.0, 0.0),
             origin: Vec3::new(0.0, 0.0, 4.0),

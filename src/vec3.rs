@@ -38,8 +38,8 @@ impl Vec3 {
         self.squared_length().sqrt()
     }
 
-    pub fn unit_vector(v: Vec3) -> Vec3 {
-        v / v.length()
+    pub fn unit_vector(v: &Vec3) -> Vec3 {
+        *v / v.length()
     }
 
     pub fn squared_length(&self) -> f32 {
@@ -71,6 +71,20 @@ impl ops::Mul<f32> for Vec3 {
     fn mul(self, rhs: f32) -> Self::Output {
         Vec3 {
             e: [self.e[0] * rhs, self.e[1] * rhs, self.e[2] * rhs],
+        }
+    }
+}
+
+impl ops::Mul for Vec3 {
+    type Output = Vec3;
+
+    fn mul(self, rhs: Self) -> Self::Output {
+        Vec3 {
+            e: [
+                self.e[0] * rhs.e[0],
+                self.e[1] * rhs.e[1],
+                self.e[2] * rhs.e[2],
+            ],
         }
     }
 }
