@@ -51,9 +51,9 @@ fn random_in_unit_sphere() -> Vec3 {
 
 fn main() {
     let byte_float: f32 = 255.999;
-    let image_width = 1000;
-    let image_height = 500;
-    let samples = 64;
+    let image_width = 500;
+    let image_height = 250;
+    let samples = 16;
     let max_value = 255;
 
     println!("P3\n{} {}\n{}", image_width, image_height, max_value);
@@ -81,17 +81,14 @@ fn main() {
         0.3,
         Material::Metal {
             albedo: Vec3::new(0.8, 0.6, 0.2),
-            fuzz: 0.6,
+            fuzz: 0.1,
         },
     )));
 
     list.push(Box::new(Sphere::new(
         Vec3::new(-0.5, -0.3, -0.5),
         0.2,
-        Material::Metal {
-            albedo: Vec3::new(0.8, 0.8, 0.8),
-            fuzz: 0.2,
-        },
+        Material::Dielectric { ref_idx: 1.5 },
     )));
 
     let world = HittableList::new(list);
