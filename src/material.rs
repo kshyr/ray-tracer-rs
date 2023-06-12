@@ -3,7 +3,7 @@ use crate::{hittable::HitRecord, random_in_unit_sphere, ray::Ray, vec3::Vec3};
 #[derive(Clone, Copy)]
 pub enum Material {
     Lambertian { albedo: Vec3 },
-    Metal { albedo: Vec3 },
+    Metal { albedo: Vec3, fuzz: f32 },
     Dielectric {},
 }
 
@@ -29,9 +29,13 @@ pub fn scatter(
             *attentuation = albedo;
             return true;
         }
-        &Material::Metal { albedo } => {
+        &Material::Metal { albedo, fuzz } => {
+            let mut f = 1.0;
+            if f < 1.0 {
+                f = fuzz;
+            }
             let reflected = reflect(&Vec3::unit_vector(&ray_in.B), &rec.normal);
-            *scattered = Ray::new(rec.p, reflected);
+            *scattered = Ray::new(rec.p, reflected + random_in_unit_sphere() * fuzz);
             *attentuation = albedo;
             return Vec3::dot(&scattered.B, &rec.normal) > 0.0;
         }
